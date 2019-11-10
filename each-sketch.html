@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      #boxes-container {
+        display: flex;
+        flex-wrap: wrap;
+        background-color: #fff;
+        height: 800px;
+        width: 800px;
+        border: 1px solid #888;
+        margin: 0 auto;
+      }
+      .box {
+        /* border: 1px solid #444; */
+        box-sizing: border-box;
+        background-color: #fff;
+        cursor: crosshair;
+        /* border-radius: 100%; */
+      }
+      .colored {
+        background-color: #276fbf;
+      }
+      .sketch-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      #clear-button {
+        padding: 10px 30px;
+        background-color: #20a4f3;
+        color: #0c1b33;
+        font-size: 20px;
+        border-radius: 4px;
+        border: none;
+        margin: 20px 0;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sketch-container">
+      <button id="clear-button">Clear</button>
+      <div id="boxes-container"></div>
+    </div>
+
+    <script>
+      const boxesContainer = document.getElementById('boxes-container');
+      const clearButton = document.getElementById('clear-button');
+      let numOfCells = (function ask() {
+        var n = prompt(
+          'Enter the number of cells in every row x column, 1 - 100:'
+        );
+        return isNaN(n) || +n > 100 || +n < 1 ? ask() : n;
+      })();
+
+      for (let i = 1; i <= numOfCells ** 2; i++) {
+        const box = document.createElement('DIV');
+        // Add className to the Element
+        box.classList.add('box');
+
+        // Add Width and Height
+        box.style.width = `${100 / numOfCells}%`;
+        box.style.height = `${100 / numOfCells}%`;
+
+        // Add hover event listener
+        box.addEventListener('mouseenter', e => {
+          if (Array.from(e.target.classList).includes('colored')) {
+            // box.classList.remove('colored');
+          } else {
+            box.classList.add('colored');
+          }
+        });
+
+        // Append the created element to boxes container
+        boxesContainer.appendChild(box);
+      }
+
+      //clear Element
+      clearButton.addEventListener('click', e => {
+        document.getElementsByClassName('colored');
+        Array.from(document.getElementsByClassName('colored')).forEach(ele => {
+          ele.classList.remove('colored');
+        });
+      });
+    </script>
+  </body>
+</html>
